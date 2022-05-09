@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router
   ) { 
     this.initForm();

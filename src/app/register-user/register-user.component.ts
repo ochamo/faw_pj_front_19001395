@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterUserComponent implements OnInit {
 
-  constructor() { }
+  public registerForm: FormGroup
+
+  constructor(
+    private router: Router
+  ) { 
+    this.initForm();
+  }
+
+  private initForm() {
+    this.registerForm = new FormGroup({
+      name: new FormControl(''),
+      userName: new FormControl(''),
+      pass: new FormControl(''),
+      dateOfBirth: new FormControl(''),
+      userSex: new FormControl('')
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  public login() {
+    this.router.navigate(['/login'])
   }
 
 }
