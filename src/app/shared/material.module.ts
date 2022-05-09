@@ -7,7 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import {MatTable, MatTableModule} from '@angular/material/table';
-
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
     exports: [
@@ -17,7 +17,8 @@ import {MatTable, MatTableModule} from '@angular/material/table';
         MatToolbarModule,
         MatButtonModule,
         MatDatepickerModule,
-        MatMomentDateModule
+        MatMomentDateModule,
+        MatSelectModule
     ],
     providers: [
         MatDatepickerModule,
