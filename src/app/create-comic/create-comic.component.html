@@ -1,0 +1,42 @@
+<div>
+    <div>
+        <form [formGroup]="createComicForm" > 
+            <mat-form-field appearance="fill">
+                <mat-label>
+                    Nombre
+                </mat-label>
+                <input matInput type="text" formControlName="name">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>
+                    Año de impresión
+                </mat-label>
+                <input matInput type="text" formControlName="name">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>
+                    Sinopsis
+                </mat-label>
+                <input matInput type="text" formControlName="name">
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Editorial</mat-label>
+                <mat-select formControlName="editorial">
+                  <mat-option value="valid">Valid option</mat-option>
+                  <mat-option value="invalid">Invalid option</mat-option>
+                </mat-select>
+                <!--mat-hint>Errors appear instantly!</mat-hint>
+                <mat-error *ngIf="selected.hasError('required')">You must make a selection</mat-error>
+                <mat-error *ngIf="selected.hasError('pattern') && !selected.hasError('required')">
+                  Your selection is invalid
+                </mat-error-->
+            </mat-form-field>
+            <br>
+            <br>
+            <button mat-flat-button color="primary">Registrar</button>
+        </form>
+    </div>
+</div>

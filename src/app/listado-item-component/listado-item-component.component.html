@@ -1,0 +1,24 @@
+<div class="item">
+    <div class="comicImage">
+        <img src="/assets/img/image_logo.png">
+    </div>
+    <div class="rowComic">
+        <p>
+            {{comic.name}}
+        </p>
+        <p>
+            {{comic.printYear}}
+        </p>
+        <p>
+            {{comic.sinopsis}}
+        </p>
+    </div>
+    <div class="optionsRow" *ngIf="isUserOwner()">
+        <mat-icon>
+            edit
+        </mat-icon>
+        <mat-icon >
+            delete
+        </mat-icon>
+    </div>
+</div>
