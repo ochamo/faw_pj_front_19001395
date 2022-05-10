@@ -1,0 +1,12 @@
+<div id="buttonContainer">
+    <button mat-fab color="primary">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<div id="parentList">
+    <h2>Listado de comics disponibles</h2>
+    <div id="comicList" *ngFor="let comic of listOfComics; last as isLast">
+        <app-listado-item-component [comic]="comic" ></app-listado-item-component>
+        <span *ngIf="!isLast">&nbsp;</span>
+    </div>
+</div>

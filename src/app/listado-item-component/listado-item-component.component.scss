@@ -1,0 +1,26 @@
+.item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px black;
+    //border-style: dotted;
+}
+
+.rowComic {
+    display: flex;
+    flex-direction: column;
+    padding-left: 2%;
+    margin-right: 4%;
+
+}
+
+.comicImage {
+    height: 100%;
+}
+
+.optionsRow {
+    display: flex;
+    flex-direction: row;
+    gap: 30%;
+    margin-right: 2%;
+}
