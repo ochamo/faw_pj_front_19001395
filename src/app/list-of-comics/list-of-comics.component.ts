@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateComicComponent } from '../create-comic/create-comic.component';
 import { ComicModel } from '../shared/model/comic.model';
+import { ComicService } from '../shared/services/comic.service';
 
 @Component({
   selector: 'app-list-of-comics',
@@ -10,33 +13,29 @@ export class ListOfComicsComponent implements OnInit {
 
   public listOfComics: ComicModel[];
 
-  constructor() {
-    this.listOfComics = [
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-      new ComicModel(1, 1, "Doctor strange", "2022", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."),
-    ];
+  constructor(
+    private comicService: ComicService,
+    private dialog: MatDialog
+  ) {
+
   }
 
   ngOnInit(): void {
+    this.comicService.getComics().subscribe({
+      next: (res) => {
+        this.listOfComics.push(...res);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  openCreateComic() {
+    const ref = this.dialog.open(CreateComicComponent, {
+      width: '500px',
+      height: '500px'
+    })
   }
 
 }

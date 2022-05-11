@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, pipe } from 'rxjs';
 import { LoginModel } from '../shared/model/login.model';
 import { ILoginService } from '../shared/services/login.service';
+import { ITokenService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +15,15 @@ import { ILoginService } from '../shared/services/login.service';
 export class LoginComponent implements OnInit {
   
   public loginForm: FormGroup;
-  userNotFoundMessage: string;
+  userNotFoundMessage: boolean;
 
   constructor(
     private router: Router,
-    private loginService: ILoginService
+    private loginService: ILoginService,
+    private tokenService: ITokenService
   ) { 
     this.initForm();
-    this.userNotFoundMessage = "";
+    this.userNotFoundMessage = false;
   }
 
   ngOnInit(): void {
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
   private initForm() {
     this.loginForm = new FormGroup({
       userName: new FormControl('', [Validators.required, Validators.email]),
-      pass: new FormControl('', [Validators.required])
+      pass: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
 
@@ -39,26 +41,34 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    this.loginService.login(new LoginModel())
-    .subscribe({
-      next: (res) =>{
-        console.log("res");
-        console.log(res);
-      },
-      error: (error) => {
-        if (error.error instanceof ErrorEvent) {
-          console.log(error);
+    console.log("form")
+    if (this.loginForm.valid) {
+      console.log("inside")
+      let loginModel = new LoginModel(
+        this.loginForm.get('userName')?.value,
+        this.loginForm.get('pass')?.value
+        );
+      this.doLogin(loginModel);
+    }
+  }
 
-        } else {
-          console.log(error);
-
-        }
-      }
-    });
+  private doLogin(loginModel: LoginModel) {
+    this.loginService.login(loginModel)
+      .subscribe({
+        next: (res) => {
+          this.tokenService.saveAuth(res);
+          this.router.navigate(['/comics']);
+        },
+        error: this.handleError
+      });
   }
 
   private handleError(error: any) {
-
+    if (error.error instanceof ErrorEvent) {
+    } else {
+      console.log(error);
+      this.userNotFoundMessage = true;
+    }
   }
 
 }

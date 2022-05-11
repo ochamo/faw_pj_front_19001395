@@ -11,8 +11,14 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { CreateComicComponent } from './create-comic/create-comic.component';
 import { ListadoItemComponentComponent } from './listado-item-component/listado-item-component.component';
 import { ListOfComicsComponent } from './list-of-comics/list-of-comics.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {ILoginService, LoginService} from './shared/services/login.service';
+import { ISexService, SexService } from './shared/services/sex.service';
+import { IRegisterUserService, RegisterUserService } from './shared/services/registerUser.service';
+import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
+import { ITokenService, TokenService } from './shared/services/token.service';
+import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
+import { ComicService, IComicService } from './shared/services/comic.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +27,8 @@ import {ILoginService, LoginService} from './shared/services/login.service';
     RegisterUserComponent,
     CreateComicComponent,
     ListadoItemComponentComponent,
-    ListOfComicsComponent
+    ListOfComicsComponent,
+    SuccessDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,13 @@ import {ILoginService, LoginService} from './shared/services/login.service';
     MaterialModule
   ],
   providers: [
-    {provide: ILoginService, useExisting: LoginService}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: ILoginService, useExisting: LoginService},
+    {provide: IComicService, useExisting: ComicService},
+    {provide: ISexService, useExisting: SexService},
+    {provide: ITokenService, useExisting: TokenService},
+    {provide: IComicService, useExisting: ComicService},
+    {provide: IRegisterUserService, useExisting: RegisterUserService}
   ],
   bootstrap: [AppComponent]
 })
