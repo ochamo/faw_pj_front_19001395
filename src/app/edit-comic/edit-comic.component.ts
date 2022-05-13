@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateComicComponent } from '../create-comic/create-comic.component';
+import { ComicModel } from '../shared/model/comic.model';
 import { CreateComicModel } from '../shared/model/createComic.model';
+import { EditComicModel } from '../shared/model/editComic.model';
 import { EditorialModel } from '../shared/model/editorial.model';
 import { CreateComicService } from '../shared/services/createComic.service';
+import { EditComicService } from '../shared/services/editComic.service';
 import { EditorialService } from '../shared/services/editorial.service';
 
 @Component({
@@ -14,13 +17,14 @@ import { EditorialService } from '../shared/services/editorial.service';
 })
 export class EditComicComponent implements OnInit {
 
-  public createComicForm: FormGroup;
+  public editComicForm: FormGroup;
   public editorials: EditorialModel[];
 
   constructor(
     private dialogRef: MatDialogRef<CreateComicComponent>,
     private editorialService: EditorialService,
-    private createComicService: CreateComicService,
+    private editComicService: EditComicService,
+    @Inject(MAT_DIALOG_DATA) public data: ComicModel
   ) { 
     this.editorials = [];
     this.initForm();
@@ -28,21 +32,15 @@ export class EditComicComponent implements OnInit {
   }
 
   private initForm() {
-    this.createComicForm = new FormGroup({
-      'name': new FormControl('', [Validators.required]),
-      'printYear': new FormControl('', [Validators.maxLength(4)]),
-      'sinopsis': new FormControl('', [Validators.required]),
-      'editorial': new FormControl('', [Validators.required])
+    this.editComicForm = new FormGroup({
+      'name': new FormControl(this.data.name, [Validators.required]),
+      'printYear': new FormControl(this.data.printYear, [Validators.maxLength(4)]),
+      'sinopsis': new FormControl(this.data.sinopsis, [Validators.required]),
+      'editorial': new FormControl(this.data.idEditorial, [Validators.required])
     });
   }
 
-  ngOnInit(): void {
-    this.editorialService.getEditorials().subscribe({
-      next: (res) => {
-
-      }
-    })
-  }
+  ngOnInit(): void {}
 
   private getEditorials() {
     this.editorialService.getEditorials().subscribe({
@@ -54,20 +52,20 @@ export class EditComicComponent implements OnInit {
     })
   }
 
-  public createComic() {
-    if (this.createComicForm.valid) {
-      let comicModel = new CreateComicModel();
-      comicModel.name = this.createComicForm.get('name')?.value;
-      comicModel.printYear = this.createComicForm.get('printYear')?.value;
-      comicModel.sinopsis = this.createComicForm.get('sinopsis')?.value;
-      comicModel.idEditorial = this.createComicForm.get('editorial')?.value;
-
-      this.doCreateComic(comicModel);
+  public editComic() {
+    if (this.editComicForm.valid) {
+      let comicModel = new EditComicModel();
+      comicModel.comicName = this.editComicForm.get('name')?.value;
+      comicModel.comicPrintYear = this.editComicForm.get('printYear')?.value;
+      comicModel.comicSinopsis = this.editComicForm.get('sinopsis')?.value;
+      comicModel.comicEditorial = this.editComicForm.get('editorial')?.value;
+      comicModel.idComic = this.data.comicId;
+      this.doEditComic(comicModel);
     }
   }
 
-  private doCreateComic(comic: CreateComicModel) {
-    this.createComicService.createComic(comic).subscribe({
+  private doEditComic(comic: EditComicModel) {
+    this.editComicService.editComic(comic).subscribe({
       next: (res) => {
         this.dialogRef.close();
       }, 

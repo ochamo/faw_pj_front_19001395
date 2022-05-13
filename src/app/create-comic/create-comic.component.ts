@@ -37,13 +37,7 @@ export class CreateComicComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.editorialService.getEditorials().subscribe({
-      next: (res) => {
-
-      }
-    })
-  }
+  ngOnInit(): void {}
 
   private getEditorials() {
     this.editorialService.getEditorials().subscribe({

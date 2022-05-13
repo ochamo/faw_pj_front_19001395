@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateComicComponent } from '../create-comic/create-comic.component';
 import { DeleteComicDialogComponent } from '../delete-comic-dialog/delete-comic-dialog.component';
+import { EditComicComponent } from '../edit-comic/edit-comic.component';
 import { ComicModel } from '../shared/model/comic.model';
 import { IComicService } from '../shared/services/comic.service';
 
@@ -51,7 +52,7 @@ export class ListOfComicsComponent implements OnInit {
       next: (res) => {
         this.getComicsList();
       }
-    })
+    });
 
   }
 
@@ -69,6 +70,19 @@ export class ListOfComicsComponent implements OnInit {
             }
           })
         }
+      }
+    });
+  }
+
+  showEditRequestDialog(item: ComicModel) {
+    const ref = this.dialog.open(EditComicComponent, {
+      width: '500px',
+      height: '500px',
+      data: item
+    });
+    ref.afterClosed().subscribe({
+      next: (res) => {
+        this.getComicsList();
       }
     })
   }

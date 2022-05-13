@@ -13,6 +13,7 @@ export class ListadoItemComponentComponent implements OnInit {
   comic: ComicModel
 
   @Output() deleteItemRequest = new EventEmitter<number>();
+  @Output() editItemRequest = new EventEmitter<ComicModel>();
 
   constructor(
     private tokenService: ITokenService
@@ -27,6 +28,10 @@ export class ListadoItemComponentComponent implements OnInit {
 
   public deleteItem(idComic: number): void {
     this.deleteItemRequest.emit(idComic);
+  }
+
+  public editItem(comic: ComicModel): void {
+    this.editItemRequest.emit(comic);
   }
 
 }

@@ -1,7 +1,10 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
+<mat-toolbar *ngIf="isLoggedIn()" color="primary">
+    <mat-toolbar-row id="closeSession">
         <div>
-            <a mat-button>Cerrar sesión</a>
+            <a>Comics</a>
+        </div>
+        <div>
+            <a mat-button (click)="logOut()">Cerrar sesión</a>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>

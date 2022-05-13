@@ -14,7 +14,7 @@
         <p> {{comic.sinopsis}} </p>
     </div>
     <div class="optionsRow" *ngIf="isUserOwner()">
-        <mat-icon>
+        <mat-icon (click)="editItem(comic)">
             edit
         </mat-icon>
         <mat-icon (click)="deleteItem(comic.comicId)">

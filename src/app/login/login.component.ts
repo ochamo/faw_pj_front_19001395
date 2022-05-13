@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   ) { 
     this.initForm();
     this.userNotFoundMessage = false;
+    console.log("here")
   }
 
   ngOnInit(): void {
@@ -41,9 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    console.log("form")
     if (this.loginForm.valid) {
-      console.log("inside")
       let loginModel = new LoginModel(
         this.loginForm.get('userName')?.value,
         this.loginForm.get('pass')?.value
@@ -58,6 +57,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           this.tokenService.saveAuth(res);
           this.router.navigate(['/comics']);
+
         },
         error: this.handleError
       });
