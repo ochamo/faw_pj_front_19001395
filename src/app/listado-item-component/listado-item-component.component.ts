@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComicModel } from '../shared/model/comic.model';
+import { ITokenService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-listado-item-component',
@@ -11,13 +12,21 @@ export class ListadoItemComponentComponent implements OnInit {
   @Input()
   comic: ComicModel
 
-  constructor() { }
+  @Output() deleteItemRequest = new EventEmitter<number>();
+
+  constructor(
+    private tokenService: ITokenService
+  ) { }
 
   ngOnInit(): void {
   }
 
   public isUserOwner(): boolean {
-    return true;
+    return this.comic.userId == this.tokenService.getId();
+  }
+
+  public deleteItem(idComic: number): void {
+    this.deleteItemRequest.emit(idComic);
   }
 
 }

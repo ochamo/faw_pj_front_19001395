@@ -6,6 +6,7 @@ import { ComicModel } from "../model/comic.model";
 
 export abstract class IComicService {
     abstract getComics(): Observable<ComicModel[]>
+    abstract deleteComic(id: number): Observable<any>
 }
 
 @Injectable({
@@ -17,6 +18,10 @@ export class ComicService implements IComicService {
 
     getComics(lastId: number = 0): Observable<ComicModel[]> {
         return this.httpClient.get<ComicModel[]>(environment.endpoint + `Comic/${lastId}`);
+    }
+
+    deleteComic(id: number): Observable<any> {
+        return this.httpClient.delete(environment.endpoint + `Comic/${id}`);
     }
 
 }

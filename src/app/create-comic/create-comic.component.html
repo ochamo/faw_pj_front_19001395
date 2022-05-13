@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Nuevo comic</h1>
 <div id="createComicContainer" mat-dialog-content>
     <div>
-        <form [formGroup]="createComicForm" > 
+        <form [formGroup]="createComicForm" (ngSubmit)="createComic()"> 
             <mat-form-field appearance="fill">
                 <mat-label>
                     Nombre
@@ -13,21 +13,20 @@
                 <mat-label>
                     Año de impresión
                 </mat-label>
-                <input matInput type="text" formControlName="name">
+                <input matInput type="text" formControlName="printYear">
             </mat-form-field>
             <br>
             <mat-form-field appearance="fill">
                 <mat-label>
                     Sinopsis
                 </mat-label>
-                <input matInput type="text" formControlName="name">
+                <textarea matInput type="text" formControlName="sinopsis"></textarea>
             </mat-form-field>
             <br>
             <mat-form-field appearance="fill">
                 <mat-label>Editorial</mat-label>
                 <mat-select formControlName="editorial">
-                  <mat-option value="valid">Valid option</mat-option>
-                  <mat-option value="invalid">Invalid option</mat-option>
+                  <mat-option *ngFor="let option of editorials" [value]="option.editorialId">{{option.name}}</mat-option>
                 </mat-select>
                 <!--mat-hint>Errors appear instantly!</mat-hint>
                 <mat-error *ngIf="selected.hasError('required')">You must make a selection</mat-error>

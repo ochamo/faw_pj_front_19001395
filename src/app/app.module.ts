@@ -19,6 +19,10 @@ import { SuccessDialogComponent } from './success-dialog/success-dialog.componen
 import { ITokenService, TokenService } from './shared/services/token.service';
 import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
 import { ComicService, IComicService } from './shared/services/comic.service';
+import { CreateComicService, ICreateComicService } from './shared/services/createComic.service';
+import { DeleteComicDialogComponent } from './delete-comic-dialog/delete-comic-dialog.component';
+import { EditComicComponent } from './edit-comic/edit-comic.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import { ComicService, IComicService } from './shared/services/comic.service';
     CreateComicComponent,
     ListadoItemComponentComponent,
     ListOfComicsComponent,
-    SuccessDialogComponent
+    SuccessDialogComponent,
+    DeleteComicDialogComponent,
+    EditComicComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +51,7 @@ import { ComicService, IComicService } from './shared/services/comic.service';
     {provide: IComicService, useExisting: ComicService},
     {provide: ISexService, useExisting: SexService},
     {provide: ITokenService, useExisting: TokenService},
-    {provide: IComicService, useExisting: ComicService},
+    {provide: ICreateComicService, useExisting: CreateComicService},
     {provide: IRegisterUserService, useExisting: RegisterUserService}
   ],
   bootstrap: [AppComponent]
