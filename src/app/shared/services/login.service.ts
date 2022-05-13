@@ -17,10 +17,9 @@ export class LoginService implements ILoginService {
    constructor(
        private http: HttpClient
    ) { }
-    login(loginData: LoginModel): Observable<AuthResponse> {
-        return this.http.post<AuthResponse>(environment.endpoint + 'login', loginData);
-    }
-
-
+   
+   login(loginData: LoginModel): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(environment.endpoint + 'Login', loginData);
+   }
 
 }
