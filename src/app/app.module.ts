@@ -11,8 +11,29 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { CreateComicComponent } from './create-comic/create-comic.component';
 import { ListadoItemComponentComponent } from './listado-item-component/listado-item-component.component';
 import { ListOfComicsComponent } from './list-of-comics/list-of-comics.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {ILoginService, LoginService} from './shared/services/login.service';
+import { ISexService, SexService } from './shared/services/sex.service';
+import { IRegisterUserService, RegisterUserService } from './shared/services/registerUser.service';
+import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
+import { ITokenService, TokenService } from './shared/services/token.service';
+import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
+import { ComicService, IComicService } from './shared/services/comic.service';
+import { CreateComicService, ICreateComicService } from './shared/services/createComic.service';
+import { DeleteComicDialogComponent } from './delete-comic-dialog/delete-comic-dialog.component';
+import { EditComicComponent } from './edit-comic/edit-comic.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+import { AuthGuard } from './shared/services/app.guard';
+import { LoginGuard } from './shared/services/login.guard';
+import { EditComicService, IEditComicService } from './shared/services/editComic.service';
+
+// from the ngx-lottie documentation
+export function playerFactory() {
+  return player;
+}
 
 @NgModule({
   declarations: [
@@ -21,7 +42,12 @@ import {ILoginService, LoginService} from './shared/services/login.service';
     RegisterUserComponent,
     CreateComicComponent,
     ListadoItemComponentComponent,
-    ListOfComicsComponent
+    ListOfComicsComponent,
+    SuccessDialogComponent,
+    DeleteComicDialogComponent,
+    EditComicComponent,
+    NavbarComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -29,10 +55,20 @@ import {ILoginService, LoginService} from './shared/services/login.service';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    LottieModule.forRoot({player: playerFactory})
   ],
   providers: [
-    {provide: ILoginService, useExisting: LoginService}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: ILoginService, useExisting: LoginService},
+    {provide: IComicService, useExisting: ComicService},
+    {provide: ISexService, useExisting: SexService},
+    {provide: IEditComicService, useExisting: EditComicService},
+    {provide: ITokenService, useExisting: TokenService},
+    {provide: ICreateComicService, useExisting: CreateComicService},
+    {provide: IRegisterUserService, useExisting: RegisterUserService},
+    AuthGuard,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

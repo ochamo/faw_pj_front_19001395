@@ -1,7 +1,7 @@
 
 <div id="parentContainer">
     <div id="registerContainer">
-        <form id="register" [formGroup]="registerForm">
+        <form id="register" [formGroup]="registerForm" (ngSubmit)="registerUser()">
             <mat-form-field appearance="fill">
                 <mat-label>
                     Nombre
@@ -20,7 +20,7 @@
                 <mat-label>
                     Password
                 </mat-label>
-                <input matInput type="text" formControlName="pass">
+                <input matInput type="password" formControlName="pass">
             </mat-form-field>
             <br>
             <mat-form-field id="date" appearance="fill">
@@ -34,9 +34,8 @@
             <br>
             <mat-form-field appearance="fill">
                 <mat-label>Sexo</mat-label>
-                <mat-select formControlName="userSex">
-                  <mat-option value="valid">Valid option</mat-option>
-                  <mat-option value="invalid">Invalid option</mat-option>
+                <mat-select formControlName="userSex" >
+                  <mat-option *ngFor="let option of sexes" [value]="option.sexId">{{option.description}}</mat-option>
                 </mat-select>
                 <!--mat-hint>Errors appear instantly!</mat-hint>
                 <mat-error *ngIf="selected.hasError('required')">You must make a selection</mat-error>
@@ -44,6 +43,8 @@
                   Your selection is invalid
                 </mat-error-->
             </mat-form-field>
+            <mat-error *ngIf="error">{{error}}
+            </mat-error>
             <br>
             <br>
             <button mat-flat-button type="submit" color="primary">Registrarme</button>
